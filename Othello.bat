@@ -11,10 +11,10 @@ set textColumn[4]=５
 set textColumn[5]=６
 set textColumn[6]=７
 set textColumn[7]=８
-set textDraw[1]=●
-set textDraw[2]=○
+set textDraw[1]=○
+set textDraw[2]=●
 set textPlayer[0]=Player
-set textPlayer[1]=AI
+set textPlayer[1]=COM
 set /a inputX[A]=0
 set /a inputX[B]=1
 set /a inputX[C]=2
@@ -76,9 +76,9 @@ rem ゲームモードを選択
 	cls
 	echo ゲームモードを選択してください。
 	echo [0] Player vs Player
-	echo [1] Player vs AI
-	echo [2] AI vs Player
-	echo [3] AI vs AI
+	echo [1] Player vs COM
+	echo [2] COM vs Player
+	echo [3] COM vs COM
 	echo [4] Exit
 	set /p mode=">>"
 	if not !mode! == 0 if not !mode! == 1 if not !mode! == 2 if not !mode! == 3 if not !mode! == 4 ( goto :modeSet )
@@ -316,12 +316,23 @@ rem 置ける場所のチェックを行うための配列を生成する
 			set /a CHKcell[!cx!][!cy!]=!cnt!
 		)
 	)
-
+	
+	rem 置ける場所じゃないのに何故か置ける場所扱いになってる？
+	for /l %%i in (0,1,7) do (
+		for /l %%j in (0,1,7) do (
+			set /a x=%%i
+			set /a y=%%j
+			call set /a t=%%cell[!x!][!y!]%%
+ 			if not !t! == 0 ( set /a CHKcell[!x!][!y!]=0 )
+		)
+	)
+	
 	exit /b
 
 
 rem 盤面を描画する
 :draw
+	call :funcCHKcell
 	cls
 	for /l %%c in (1,1,2) do (
 		set /a cnt=0
@@ -342,7 +353,14 @@ rem 盤面を描画する
 			set /a x=%%j
 			set /a y=%%i
 			call set /a s=%%cell[!x!][!y!]%%
-			if !s! == 0 ( set msg=!msg!　)
+			if !s! == 0 (
+				call set /a t=%%CHKcell[!x!][!y!]%%
+				if !t! == 0 (
+					set msg=!msg!　
+				) else (
+					set msg=!msg!×
+				)
+			)
 			if !s! == 1 ( set msg=!msg!!textDraw[1]!)
 			if !s! == 2 ( set msg=!msg!!textDraw[2]!)
 		)
