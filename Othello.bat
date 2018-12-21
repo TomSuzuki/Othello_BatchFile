@@ -132,7 +132,7 @@ rem ゲーム
 	)
 	
 	rem 次のターンのプレイヤーが石を置けない
-	if num == 0 (
+	if !num! == 0 (
 		if !turn! == 1 (
 			set /a turn=2
 		) else (
@@ -147,7 +147,7 @@ rem ゲーム
 				call set /a num=!num!+%%CHKcell[!x!][!y!]%%
 			)
 		)
-		if num == 0 ( goto :gameExit )
+		if !num! == 0 ( goto :gameExit )
 	)
 	
 	goto :game
