@@ -186,7 +186,7 @@ rem プレイヤーの処理
 	
 	exit /b
 
-rem AIの処理
+rem COMの処理
 :runAI
 	
 	rem 多く返せるところに置く
@@ -223,7 +223,7 @@ rem 指定したセル（putX,putY）に置く（置けることが前提の関数）
 		set /a k=0
 		set /a add=0
 		set /a flg=1
-		for /l %%k in (1,1,7) do (
+		for /l %%k in (1,1,8) do (
 			if !flg! == 1 (
 				set /a flg=0
 				set /a nx=!putX!+!wx!*%%k
@@ -283,7 +283,7 @@ rem 置ける場所のチェックを行うための配列を生成する
 				set /a k=0
 				set /a add=0
 				set /a flg=1
-				for /l %%k in (1,1,7) do (
+				for /l %%k in (1,1,8) do (
 					if !flg! == 1 (
 						set /a flg=0
 						set /a nx=!cx!+!wx!*%%k
