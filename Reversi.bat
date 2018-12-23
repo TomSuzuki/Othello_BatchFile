@@ -1,18 +1,20 @@
 @echo off
 setlocal ENABLEDELAYEDEXPANSION
+@REM UTF-8
+chcp 65001
 cls
 
-rem ”z—ñ‚¶‚á‚È‚¢‚æA‘S•”•Ï”‚¾‚æ
-set textColumn[0]=‚P
-set textColumn[1]=‚Q
-set textColumn[2]=‚R
-set textColumn[3]=‚S
-set textColumn[4]=‚T
-set textColumn[5]=‚U
-set textColumn[6]=‚V
-set textColumn[7]=‚W
-set textDraw[1]=›
-set textDraw[2]=œ
+rem é…åˆ—ã˜ã‚ƒãªã„ã‚ˆã€å…¨éƒ¨å¤‰æ•°ã ã‚ˆ
+set textColumn[0]=ï¼‘
+set textColumn[1]=ï¼’
+set textColumn[2]=ï¼“
+set textColumn[3]=ï¼”
+set textColumn[4]=ï¼•
+set textColumn[5]=ï¼–
+set textColumn[6]=ï¼—
+set textColumn[7]=ï¼˜
+set textDraw[1]=â—‹
+set textDraw[2]=â—
 set textPlayer[0]=Player
 set textPlayer[1]=COM
 set /a inputX[A]=0
@@ -56,7 +58,7 @@ set /a wayY[5]=1
 set /a wayY[6]=1
 set /a wayY[7]=1
 
-rem ”Õ–Ê‚Æ‚©‰Šú‰»
+rem ç›¤é¢ã¨ã‹åˆæœŸåŒ–
 :initialize
 	for /l %%i in (0,1,7) do (
 		for /l %%j in (0,1,7) do (
@@ -71,10 +73,10 @@ rem ”Õ–Ê‚Æ‚©‰Šú‰»
 	set /a cell[3][4]=1
 	set /a turn=1
 
-rem ƒQ[ƒ€ƒ‚[ƒh‚ğ‘I‘ğ
+rem ã‚²ãƒ¼ãƒ ãƒ¢ãƒ¼ãƒ‰ã‚’é¸æŠ
 :modeSet
 	cls
-	echo ƒQ[ƒ€ƒ‚[ƒh‚ğ‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢B
+	echo ã‚²ãƒ¼ãƒ ãƒ¢ãƒ¼ãƒ‰ã‚’é¸æŠã—ã¦ãã ã•ã„ã€‚
 	echo [0] Player vs Player
 	echo [1] Player vs COM
 	echo [2] COM vs Player
@@ -96,14 +98,14 @@ rem ƒQ[ƒ€ƒ‚[ƒh‚ğ‘I‘ğ
 		set /a player[2]=1
 	) else if !mode! == 4 ( exit )
 
-rem ƒQ[ƒ€
+rem ã‚²ãƒ¼ãƒ 
 :game
-	rem Œ»İ‚Ì”Õ–Ê‚Ì•`‰æ
+	rem ç¾åœ¨ã®ç›¤é¢ã®æç”»
 	call :draw
 	echo ------------------
-	call echo %%textDraw[!turn!]%%‚Ìƒ^[ƒ“‚Å‚·B
+	call echo %%textDraw[!turn!]%%ã®ã‚¿ãƒ¼ãƒ³ã§ã™ã€‚
 	
-	rem ƒvƒŒƒCƒ„[‚Ìˆ—
+	rem ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å‡¦ç†
 	call set t=%%player[!turn!]%%
 	if !t! == 0 (
 		rem player
@@ -113,14 +115,14 @@ rem ƒQ[ƒ€
 		call :runAI
 	)
 	
-	rem ƒQ[ƒ€ˆ—
+	rem ã‚²ãƒ¼ãƒ å‡¦ç†
 	if !turn! == 1 (
 		set /a turn=2
 	) else (
 		set /a turn=1
 	)
 	
-	rem ’u‚¯‚éêŠ‚ª‚ ‚é‚©ƒ`ƒFƒbƒNi—¼•û‚È‚¯‚ê‚ÎI—¹j
+	rem ç½®ã‘ã‚‹å ´æ‰€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯ï¼ˆä¸¡æ–¹ãªã‘ã‚Œã°çµ‚äº†ï¼‰
 	call :funcCHKcell
 	set /a num=0
 	for /l %%i in (0,1,7) do (
@@ -131,7 +133,7 @@ rem ƒQ[ƒ€
 		)
 	)
 	
-	rem Ÿ‚Ìƒ^[ƒ“‚ÌƒvƒŒƒCƒ„[‚ªÎ‚ğ’u‚¯‚È‚¢
+	rem æ¬¡ã®ã‚¿ãƒ¼ãƒ³ã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒçŸ³ã‚’ç½®ã‘ãªã„
 	if !num! == 0 (
 		if !turn! == 1 (
 			set /a turn=2
@@ -159,37 +161,37 @@ rem ƒQ[ƒ€
 
 	call :draw
 	echo ------------------
-	echo ƒQ[ƒ€‚ªI—¹‚µ‚Ü‚µ‚½B
+	echo ã‚²ãƒ¼ãƒ ãŒçµ‚äº†ã—ã¾ã—ãŸã€‚
 	
 	pause
 	exit
 
 
-rem ƒvƒŒƒCƒ„[‚Ìˆ—
+rem ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å‡¦ç†
 :runPlayer
-	set /p put=’u‚­êŠ‚ğ“ü—Í‚µ‚Ä‚­‚¾‚³‚¢ix,yj : 
+	set /p put=ç½®ãå ´æ‰€ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ï¼ˆx,yï¼‰ : 
 	call set /a px=%%inputX[%put:~0,1%]%%
 	call set /a py=%%inputY[%put:~1,1%]%%
 	
-	rem ’u‚¯‚é‚©ƒ`ƒFƒbƒN
+	rem ç½®ã‘ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	call :funcCHKcell
 	call set /a t=%%CHKcell[!px!][!py!]%%
 	if !t! == 0 (
-		echo !put!‚ÉÎ‚ğ’u‚­‚±‚Æ‚ª‚Å‚«‚Ü‚¹‚ñB•Ê‚ÌêŠ‚ğw’è‚µ‚Ä‚­‚¾‚³‚¢B
+		echo !put!ã«çŸ³ã‚’ç½®ãã“ã¨ãŒã§ãã¾ã›ã‚“ã€‚åˆ¥ã®å ´æ‰€ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚
 		goto :runPlayer
 	)
 	
-	rem ’u‚­
+	rem ç½®ã
 	set /a putX=!px!
 	set /a putY=!py!
 	call :funcSETcell
 	
 	exit /b
 
-rem COM‚Ìˆ—
+rem COMã®å‡¦ç†
 :runAI
 	
-	rem ‘½‚­•Ô‚¹‚é‚Æ‚±‚ë‚É’u‚­
+	rem å¤šãè¿”ã›ã‚‹ã¨ã“ã‚ã«ç½®ã
 	set /a putX=-1
 	set /a putY=-1
 	set /a max=0
@@ -207,12 +209,12 @@ rem COM‚Ìˆ—
 		)
 	)
 		
-	rem ’u‚­
+	rem ç½®ã
 	call :funcSETcell
 	
 	exit /b
 
-rem w’è‚µ‚½ƒZƒ‹iputX,putYj‚É’u‚­i’u‚¯‚é‚±‚Æ‚ª‘O’ñ‚ÌŠÖ”j
+rem æŒ‡å®šã—ãŸã‚»ãƒ«ï¼ˆputX,putYï¼‰ã«ç½®ãï¼ˆç½®ã‘ã‚‹ã“ã¨ãŒå‰æã®é–¢æ•°ï¼‰
 :funcSETcell
 	
 	set /a cell[!putX!][!putY!]=!turn!
@@ -239,12 +241,12 @@ rem w’è‚µ‚½ƒZƒ‹iputX,putYj‚É’u‚­i’u‚¯‚é‚±‚Æ‚ª‘O’ñ‚ÌŠÖ”j
 				) else (
 				 	call set /a t=%%cell[!nx!][!ny!]%%
 					if !t! == !turn! (
-						rem ©•ª‚ÌÎ‚È‚çˆ—‚ğI—¹
+						rem è‡ªåˆ†ã®çŸ³ãªã‚‰å‡¦ç†ã‚’çµ‚äº†
 					) else if !t! == 0 (
-						rem ‹ó”’ƒZƒ‹‚È‚ç•Ô‚¹‚é”‚ğ0‚É‚µAˆ—‚ğI—¹
+						rem ç©ºç™½ã‚»ãƒ«ãªã‚‰è¿”ã›ã‚‹æ•°ã‚’0ã«ã—ã€å‡¦ç†ã‚’çµ‚äº†
 						set /a add=0
 					) else (
-						rem ‘Šè‚ÌÎ‚Ì‚Æ‚«‚È‚ç•Ô‚¹‚é”‚ğ‘‚â‚µˆ—‚ğ‘±s
+						rem ç›¸æ‰‹ã®çŸ³ã®ã¨ããªã‚‰è¿”ã›ã‚‹æ•°ã‚’å¢—ã‚„ã—å‡¦ç†ã‚’ç¶šè¡Œ
 						set /a add=!add!+1
 						set /a flg=1
 					)
@@ -260,9 +262,9 @@ rem w’è‚µ‚½ƒZƒ‹iputX,putYj‚É’u‚­i’u‚¯‚é‚±‚Æ‚ª‘O’ñ‚ÌŠÖ”j
 	
 	exit /b
 
-rem ’u‚¯‚éêŠ‚Ìƒ`ƒFƒbƒN‚ğs‚¤‚½‚ß‚Ì”z—ñ‚ğ¶¬‚·‚é
+rem ç½®ã‘ã‚‹å ´æ‰€ã®ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†ãŸã‚ã®é…åˆ—ã‚’ç”Ÿæˆã™ã‚‹
 :funcCHKcell
-	rem CHKcell‚Ì‰Šú‰»i‚»‚ÌƒZƒ‹‚É‚¨‚¢‚½‚Æ‚«‚É•Ô‚¹‚éÎ‚Ì”‚ª‘ã“ü‚³‚ê‚éj
+	rem CHKcellã®åˆæœŸåŒ–ï¼ˆãã®ã‚»ãƒ«ã«ãŠã„ãŸã¨ãã«è¿”ã›ã‚‹çŸ³ã®æ•°ãŒä»£å…¥ã•ã‚Œã‚‹ï¼‰
 	for /l %%i in (0,1,7) do (
 		for /l %%j in (0,1,7) do (
 			set /a x=%%i
@@ -271,7 +273,7 @@ rem ’u‚¯‚éêŠ‚Ìƒ`ƒFƒbƒN‚ğs‚¤‚½‚ß‚Ì”z—ñ‚ğ¶¬‚·‚é
 		)
 	)
 	
-	rem ”‚¦‚é
+	rem æ•°ãˆã‚‹
 	for /l %%i in (0,1,7) do (
 		for /l %%j in (0,1,7) do (
 			set /a cx=%%i
@@ -299,12 +301,12 @@ rem ’u‚¯‚éêŠ‚Ìƒ`ƒFƒbƒN‚ğs‚¤‚½‚ß‚Ì”z—ñ‚ğ¶¬‚·‚é
 						) else (
 						 	call set /a t=%%cell[!nx!][!ny!]%%
 							if !t! == !turn! (
-								rem ©•ª‚ÌÎ‚È‚çˆ—‚ğI—¹
+								rem è‡ªåˆ†ã®çŸ³ãªã‚‰å‡¦ç†ã‚’çµ‚äº†
 							) else if !t! == 0 (
-								rem ‹ó”’ƒZƒ‹‚È‚ç•Ô‚¹‚é”‚ğ0‚É‚µAˆ—‚ğI—¹
+								rem ç©ºç™½ã‚»ãƒ«ãªã‚‰è¿”ã›ã‚‹æ•°ã‚’0ã«ã—ã€å‡¦ç†ã‚’çµ‚äº†
 								set /a add=0
 							) else (
-								rem ‘Šè‚ÌÎ‚Ì‚Æ‚«‚È‚ç•Ô‚¹‚é”‚ğ‘‚â‚µˆ—‚ğ‘±s
+								rem ç›¸æ‰‹ã®çŸ³ã®ã¨ããªã‚‰è¿”ã›ã‚‹æ•°ã‚’å¢—ã‚„ã—å‡¦ç†ã‚’ç¶šè¡Œ
 								set /a add=!add!+1
 								set /a flg=1
 							)
@@ -317,7 +319,7 @@ rem ’u‚¯‚éêŠ‚Ìƒ`ƒFƒbƒN‚ğs‚¤‚½‚ß‚Ì”z—ñ‚ğ¶¬‚·‚é
 		)
 	)
 	
-	rem ’u‚¯‚éêŠ‚¶‚á‚È‚¢‚Ì‚É‰½ŒÌ‚©’u‚¯‚éêŠˆµ‚¢‚É‚È‚Á‚Ä‚éH
+	rem ç½®ã‘ã‚‹å ´æ‰€ã˜ã‚ƒãªã„ã®ã«ä½•æ•…ã‹ç½®ã‘ã‚‹å ´æ‰€æ‰±ã„ã«ãªã£ã¦ã‚‹ï¼Ÿ
 	for /l %%i in (0,1,7) do (
 		for /l %%j in (0,1,7) do (
 			set /a x=%%i
@@ -330,7 +332,7 @@ rem ’u‚¯‚éêŠ‚Ìƒ`ƒFƒbƒN‚ğs‚¤‚½‚ß‚Ì”z—ñ‚ğ¶¬‚·‚é
 	exit /b
 
 
-rem ”Õ–Ê‚ğ•`‰æ‚·‚é
+rem ç›¤é¢ã‚’æç”»ã™ã‚‹
 :draw
 	call :funcCHKcell
 	cls
@@ -343,10 +345,10 @@ rem ”Õ–Ê‚ğ•`‰æ‚·‚é
 			)
 		)
 		call set /a t=%%player[%%c]%%
-		call echo %%textDraw[%%c]%% : !cnt! i%%textPlayer[!t!]%%j
+		call echo %%textDraw[%%c]%% : !cnt! ï¼ˆ%%textPlayer[!t!]%%ï¼‰
 	)
 	echo ------------------
-	echo {‚`‚a‚b‚c‚d‚e‚f‚g
+	echo ï¼‹ï¼¡ï¼¢ï¼£ï¼¤ï¼¥ï¼¦ï¼§ï¼¨
 	for /l %%i in (0,1,7) do (
 		call set msg=%%textColumn[%%i]%%
 		for /l %%j in (0,1,7) do (
@@ -356,9 +358,9 @@ rem ”Õ–Ê‚ğ•`‰æ‚·‚é
 			if !s! == 0 (
 				call set /a t=%%CHKcell[!x!][!y!]%%
 				if !t! == 0 (
-					set msg=!msg!@
+					set msg=!msg!ã€€
 				) else (
-					set msg=!msg!~
+					set msg=!msg!Ã—
 				)
 			)
 			if !s! == 1 ( set msg=!msg!!textDraw[1]!)
